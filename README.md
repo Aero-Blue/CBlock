@@ -2,4 +2,4 @@
  
 ## Usage
 
-`> python3 to_block.py <in_file> <out_file>`
+`python3 to_block.py <in_file> <out_file>`
