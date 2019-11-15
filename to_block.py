@@ -1,26 +1,26 @@
-import sys, os
+import sys
 
 
-def from_file(filepath):
+def from_file(filepath):  # Get a list of stripped lines from a text file
     return [line.rstrip("\n") for line in open(filepath)]
 
 
-def find_longest(lines):
+def find_longest(lines):  # Find longest string in a list of strings
     return max([len(line) for line in lines])
 
 
-def c_line(line):
+def c_line(line):  # Comment line
     return f"/*   {line}{' '*(longest-len(line))}   */"
 
 
 def c_block(lines):
-    global longest
+    global longest  # Length of longest line in list
     longest = find_longest(lines)
-    edge = f"/{'*'*(longest+8)}/"
-    return [edge] + list(map(c_line, lines)) + [edge]
+    edge = f"/{'*'*(longest+8)}/"  # Top / bottom of comment block
+    return [edge] + list(map(c_line, lines)) + [edge]  # Concatenate block
 
 
-def to_file(filepath, text):
+def to_file(filepath, text):  # Output text to file
     return open(filepath, "w").write("\n".join(text))
 
 
