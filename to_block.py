@@ -1,14 +1,15 @@
-import sys
+import argparse
 
 
 class BlockComment:
-    __slots__ = ['in_file', 'out_file', 'lines', 'line_length', 'comment_block']
+    __slots__ = ['in_file', 'out_file', 'lines', 'line_length']
 
-    def __init__(self, in_file, out_file):
-        self.in_file = in_file
-        self.out_file = out_file
+    def __init__(self, args):
+        self.in_file = args.in_file
+        self.out_file = args.out_file
         self.lines = self.from_file()
         self.line_length = self.find_longest()
+        self.export()
 
     def from_file(self):  # Get a list of stripped lines from a text file
         return list(map(lambda x: x.rstrip("\n"), open(self.in_file)))
@@ -32,4 +33,7 @@ class BlockComment:
 
 
 if __name__ == '__main__':
-    BlockComment(sys.argv[1], sys.argv[2]).export()
+    parser = argparse.ArgumentParser(prog='to_block', description='Java block comment')
+    parser.add_argument('-from', required=True, help='Filename (Required)', dest='in_file')
+    parser.add_argument('-to', default='output.txt', help='Filename (Default: output.txt)', dest='out_file')
+    BlockComment(parser.parse_args())
